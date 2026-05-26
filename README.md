@@ -19,27 +19,33 @@
 
 Pick a file. Pick any number of branches. ParallelGit produces a single unified view: lines that are identical across every branch collapse into one block, and lines that diverge fan out — one variant per branch, labeled, color-coded, with the last author and date that touched each one.
 
+```
 $ parallelgit diff src/main/java/UserService.java -b master,uat,dev
-UserService.java  ·  master (a3f9c12)  ·  uat (b7e2d05)  ·  dev (c4f1e88)
-··· lines 1–40 identical across all branches ···
-┌──────────────────────────────────────────────────────────────────────┐
-│ master   2025-03-12  sathnindu                                       │
-│   public User findById(Long id) {                                    │
-│       return repo.findById(id).orElseThrow();                        │
-│   }                                                                  │
-├──────────────────────────────────────────────────────────────────────┤
-│ uat      2025-04-22  sathnindu                                       │
-│   public User findById(Long id) {                                    │
-│       return repo.findById(id)                                       │
-│           .orElseThrow(() -> new UserNotFoundException(id));         │
-│   }                                                                  │
-├──────────────────────────────────────────────────────────────────────┤
-│ dev      2025-05-18  sathnindu                                       │
-│   public Optional<User> findById(Long id) {                          │
-│       return repo.findById(id);                                      │
-│   }                                                                  │
-└──────────────────────────────────────────────────────────────────────┘
-··· lines 56–112 identical across all branches ···
+
+UserService.java  |  master (a3f9c12)  |  uat (b7e2d05)  |  dev (c4f1e88)
+
+--- lines 1-40 identical across all branches ---
+
++----------------------------------------------------------------------+
+| master   2025-03-12   sathnindu                                      |
+|   public User findById(Long id) {                                    |
+|       return repo.findById(id).orElseThrow();                        |
+|   }                                                                  |
++----------------------------------------------------------------------+
+| uat      2025-04-22   sathnindu                                      |
+|   public User findById(Long id) {                                    |
+|       return repo.findById(id)                                       |
+|           .orElseThrow(() -> new UserNotFoundException(id));         |
+|   }                                                                  |
++----------------------------------------------------------------------+
+| dev      2025-05-18   sathnindu                                      |
+|   public Optional<User> findById(Long id) {                          |
+|       return repo.findById(id);                                      |
+|   }                                                                  |
++----------------------------------------------------------------------+
+
+--- lines 56-112 identical across all branches ---
+```
 
 That's the entire pitch. If you've ever maintained release branches, run multi-tenant forks, or backported fixes across versions — you already know why this view should have existed years ago.
 
